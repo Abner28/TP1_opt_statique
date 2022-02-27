@@ -1,8 +1,8 @@
 % Gradient à pas variable
 function  resp = pas_variable(f, x_0, rho, err, N, X, dim)
 
-resp = zeros(length(x_0),N);
-resp(:,1) = x_0;
+resp = zeros(dim*length(x_0(1,:)),N);
+resp(:,1) = reshape(x_0,[],1);
 
 grad = grad_f(f, X(1:dim));
 %grad = matlabFunction(grad);
@@ -15,13 +15,14 @@ for j = 1:length(x_0(1,:))
     for i = 2:N 
 
         x_new = xx_0 - rho.*subs(grad, X(1:dim), transpose(xx_0));
-
-        if feval(f, x_new) < feval(f, xx_0)
-            rho = 1.15*rho;
-        else
-            rho = 0.5*rho;
+        
+        for k = 1:length(rho)
+            if subs(f,) feval(f(k), x_new(k)) < feval(f(k), xx_0(k))
+                rho(k) = 1.15*rho(k);
+            else
+                rho(k) = 0.5*rho(k);
+            end
         end
-
         if all(abs(x_new - xx_0) <= err)
             xx_0 = x_new;
             resp(dim*j - 1 : dim*(1 + j) - 2 ,i) =  x_new;
