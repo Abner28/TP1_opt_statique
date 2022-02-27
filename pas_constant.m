@@ -15,6 +15,8 @@ for j = 1:length(x_0(1,:))
         x_new = xx_0 - rho.*subs(grad, X(1:dim), transpose(xx_0));
 
         if all(abs(x_new - xx_0) <= err)
+            xx_0 = x_new;
+            resp(dim*j - 1 : dim*(1 + j) - 2 ,i) =  x_new;
             break
         else
            xx_0 = x_new;
