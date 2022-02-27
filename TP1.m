@@ -27,17 +27,18 @@ e = 10^-3;  % epsilon
 
 %% Méthode de Newton
 % À changer avec la dimension du problème
-x0_newton = [0.5 1 5 ; 0 2 3];
-dim_newton = 2;
-err_newton = 0.001;
+%x0_newton = [0.5 1 5 ; 0 2 3];
+x0_newton = 0.5:5;
+dim_newton = 1;
 
+err_newton = 0.001;
 resp_newton = newton(f(X, e), x0_newton, err_newton, N, X, dim_newton);
 
-% %% fminsearch
-% x0_fmin = 1:0.5:3;
-% resp_fminsearch = f_minsearch(f(X, e), x0_fmin);
+%% fminsearch
+% x0_fmin = [0.5 1 5 0.01; 0 2 3 0.05];
+% dim_fmin = 2;
+% resp_fminsearch = f_minsearch(f(X, e), x0_fmin, X, dim_fmin);
 
-% 
 % % Display
 % figure(1)
 % plot(x, f1(x))
@@ -49,6 +50,6 @@ resp_newton = newton(f(X, e), x0_newton, err_newton, N, X, dim_newton);
 
 %% Fonctions
 function func = f(X, e)
-%func = X(1).^3 - 6*X(1).^2 + 3*X(1) + 1;
-func = e*X(1)^4 + 6*X(1)^2 + X(2)^2 - 4*X(1) + X(2);
+func = X(1).^3 - 6*X(1).^2 + 3*X(1) + 1;
+%func = e*X(1)^4 + 6*X(1)^2 + X(2)^2 - 4*X(1) + X(2);
 end
