@@ -1,32 +1,36 @@
 % TP | Optmisation Statique | Abner Micael
 
-syms x x1 x2 
-var = [x, x1, x2];
-N = 1000;
-e = 0.01;  % epsilon
+syms x1 x2 
+X = [x1, x2];
+N = 20;
+e = 10^-3;  % epsilon
 
 %% Gradient à pas constant
-x0_pc = 2:0.5:4;
-rho_pc = 0.02;
+%x0_pc = 2:0.5:4;
+% À changer avec la dimension du problème
+x0_pc = [1 ; 2];
+dim_pc = 2;
+%
+rho_pc = [0.05; 0.2];
 err_pc = 0.001;
 
-resp_pc = pas_constant(f(var, e), x0_pc, rho_pc, err_pc, N, var);
+resp_pc = pas_constant(f(X, e), x0_pc, rho_pc, err_pc, N, X, dim_pc);
 
 %% Gradient à pas variable (Règle d'Armijo)
 % x0_pv = 2:0.5:4;
 % rho_pv = 0.02;
 % err_pv = 0.001;
 % 
-% resp_pv = pas_variable(f(var, e), x0_pv, rho_pv, err_pv, N, var);
+% resp_pv = pas_variable(f(X, e), x0_pv, rho_pv, err_pv, N, X);
 % 
 % %% Méthode de Newton
 % x0_newton = 1:0.5:5;
 % err_newton = 0.001;
 % 
-% resp_newton = newton(f(var, e), x0_newton, err_newton, N, var);
+% resp_newton = newton(f(X, e), x0_newton, err_newton, N, X);
 % %% fminsearch
 % x0_fmin = 1:0.5:3;
-% resp_fminsearch = f_minsearch(f(var, e), x0_fmin);
+% resp_fminsearch = f_minsearch(f(X, e), x0_fmin);
 
 % 
 % % Display
@@ -39,7 +43,7 @@ resp_pc = pas_constant(f(var, e), x0_pc, rho_pc, err_pc, N, var);
 %
 
 %% Fonctions
-function func = f(var, e)
-func = var(1).^3 - 6*var(1).^2 + 3*var(1) + 1;
-%func = e*var(2)^4 + 6*var(2)^2 + var(3)^2 - 4*var(2) + var(3);
+function func = f(X, e)
+%func = X(1).^3 - 6*X(1).^2 + 3*X(1) + 1;
+func = e*X(1)^4 + 6*X(1)^2 + X(2)^2 - 4*X(1) + X(2);
 end
