@@ -16,11 +16,26 @@ for j = 1:length(x_0(1,:))
 
         if all(abs(x_new - xx_0) <= err)
             xx_0 = x_new;
-            resp(dim*j - 1 : dim*(1 + j) - 2 ,i) =  x_new;
+            index_nonzero = find(resp(:,i));
+            
+            if isempty(index_nonzero)
+                 resp(1:dim,i) = x_new;
+            else
+               index_nonzero = max(1, index_nonzero(end));
+               resp(index_nonzero(end) + 1 : index_nonzero(end) + dim,i) =  x_new;
+            end
             break
-        else
+         else
            xx_0 = x_new;
-           resp(dim*j - 1 : dim*(1 + j) - 2 ,i) =  x_new;
+           index_nonzero = find(resp(:,i));
+
+           if isempty(index_nonzero)
+               resp(1:dim,i) = x_new;
+           else
+               index_nonzero = max(1, index_nonzero(end));
+               resp(index_nonzero(end) + 1 : index_nonzero(end) + dim,i) =  x_new;
+           end
+
         end
     end
 end
