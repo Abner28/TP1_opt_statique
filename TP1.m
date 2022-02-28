@@ -28,11 +28,11 @@ e = 10^-3;  % epsilon
 %% Méthode de Newton
 % À changer avec la dimension du problème
 %x0_newton = [0.5 1 5 ; 0 2 3];
-x0_newton = 0.5:5;
-dim_newton = 1;
+%x0_newton = 0.5:5;
+%dim_newton = 2;
 
-err_newton = 0.001;
-resp_newton = newton(f(X, e), x0_newton, err_newton, N, X, dim_newton);
+%err_newton = 0.001;
+%resp_newton = newton(f(X, e), x0_newton, err_newton, N, X, dim_newton);
 
 %% fminsearch
 % x0_fmin = [0.5 1 5 0.01; 0 2 3 0.05];
