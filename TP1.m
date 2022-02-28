@@ -17,13 +17,15 @@ e = 10^-3;  % epsilon
 
 %% Gradient à pas variable (Règle d'Armijo)
 % À changer avec la dimension du problème
-% x0_pv = [0.5 1 ; 0 2];
-% dim_pv = 2;
-% rho_pv = [0.05; 0.2];
-% %
-% err_pv = 0.001;
-% 
-% resp_pv = pas_variable(f(X, e), x0_pv, rho_pv, err_pv, N, X, dim_pv);
+%x0_pv = [0.5 1 ; 0 2];
+x0_pv = 0.5:5;
+dim_pv = 1;
+rho_pv = 0.02;
+%rho_pv = [0.05; 0.2];
+%
+err_pv = 0.001;
+
+resp_pv = pas_variable(f(X, e), x0_pv, rho_pv, err_pv, N, X, dim_pv);
 
 %% Méthode de Newton
 % À changer avec la dimension du problème
