@@ -1,27 +1,44 @@
-function resp = newton(f, x_0, err, N, x)
+function resp = newton(f, x_0, err, N, X, dim)
 
-resp = zeros(length(x_0),N);
-resp(:,1) = x_0;
+resp = zeros(dim*length(x_0(1,:)),N);
+resp(:,1) = reshape(x_0,[],1);
 
-grad1 = grad_f(f, x);
-grad2 = grad_f(grad1, x);
+% grad1 = grad_f(f, x);
+% grad2 = grad_f(grad1, x);
+% grad1 = matlabFunction(grad1);  % Première derivative
+% grad2 = matlabFunction(grad2);  % Deuxième derivative
 
-grad1 = matlabFunction(grad1);  % Première derivative
-grad2 = matlabFunction(grad2);  % Deuxième derivative
+grad = grad_f(f, X(1:dim));
+hess_inv = inv(hessian(f));
 
-
-for j = linspace(1, length(x_0), length(x_0))
-    xx_0 = x_0(j);
+for j = 1:length(x_0(1,:))
+    xx_0 = x_0(1:dim,j);
 
     for i = 2:N 
-        x_new = xx_0  - feval(grad1, xx_0)/feval(grad2, xx_0);
-    
-        if abs(x_new - xx_0) < err 
+        %x_new = xx_0  - feval(grad1, xx_0)/feval(grad2, xx_0);
+        x_new = xx_0 - subs(hess_inv, X(1:dim), transpose(xx_0))*subs(grad, X(1:dim), transpose(xx_0));
+
+        if all(abs(x_new - xx_0) <= err)
+%             xx_0 = x_new;
+            index_nonzero = find(resp(:,i));
+            
+            if isempty(index_nonzero)
+                 resp(1:dim,i) = x_new;
+            else
+               %index_nonzero = max(1, index_nonzero(end));
+               resp(index_nonzero(end) + 1 : index_nonzero(end) + dim,i) =  x_new;
+            end
             break
         else
-
            xx_0 = x_new;
-           resp(j, i) =  x_new;
+           index_nonzero = find(resp(:,i));
+
+           if isempty(index_nonzero)
+               resp(1:dim,i) = x_new;
+           else
+               %index_nonzero = max(1, index_nonzero(end));
+               resp(index_nonzero(end) + 1 : index_nonzero(end) + dim,i) =  x_new;
+           end
 
         end
     end
