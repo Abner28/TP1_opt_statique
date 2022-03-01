@@ -7,22 +7,16 @@ e = 10^-3;  % epsilon
 
 %% Gradient à pas constant (beaucoup sensible avec le combinasion rho&x0)
 % À changer avec la dimension du problème
-% x0_pc = [0.5 1 ; 0 2];
-% x0_pc = 0.5 : 5;
-% dim_pc = 2;
+% x0_pc = linspace(0.5,3,n).';
 % rho_pc = 0.05;  % Plus petit que 0.2
-% rho_pc = [0.05; 0.2];
 % 
 % err_pc = 0.01;
 % 
-% resp_pc = pas_constant(f(X, e), x0_pc, rho_pc, err_pc, N, X, dim_pc);
+% resp_pc = pas_constant(f(X, e), x0_pc, rho_pc, err_pc, N, X, n);
 
 %% Gradient à pas variable (Règle d'Armijo)
 % À changer avec la dimension du problème
-%x0_pv = [0.5 1 ; 0 2];
-% x0_pv = [transpose(linspace(-5,1,n)), transpose(linspace(2,4,n)), transpose(linspace(0,0.5,n))];
-% %x0_pv = 0.5:5;
-% %dim_pv = 1;
+% x0_pv = linspace(0.5,3,n).';
 % %rho_pv = 0.02;
 % rho_pv = linspace(0.05,1 , n).';
 % %
@@ -32,23 +26,17 @@ e = 10^-3;  % epsilon
 
 %% Méthode de Newton
 % À changer avec la dimension du problème
-x0_newton = [transpose(linspace(-5,1,n)), transpose(linspace(2,4,n)), transpose(linspace(0,0.5,n))];
+x0_newton = linspace(0.8,3,n).';
 %x0_newton = 0.5:5;
-%dim_newton = 2;
 
-err_newton = 0.001;
+err_newton = 0.01;
 resp_newton = newton(f(X, e), x0_newton, err_newton, N, X, n);
 
 %% fminsearch
-% x0_fmin = [0.5 1 5 0.01; 0 2 3 0.05];
-% x0_fmin = 0.5 : 5;
-x0_fmin = [transpose(linspace(-5,1,n)), transpose(linspace(2,4,n)), transpose(linspace(0,0.5,n))];
-%x0_newton = 0.5:5;
-% dim_fmin = 2;
+x0_fmin = linspace(0.8,1,n).';
+resp_fminsearch = f_minsearch(f(X, e), x0_fmin, X, n);
 
- resp_fminsearch = f_minsearch(f(X, e), x0_fmin, X, n);
-
-% % Display
+%% Display
 % figure(1)
 % plot(x, f1(x))
 % hold on
