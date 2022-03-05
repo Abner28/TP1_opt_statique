@@ -12,15 +12,16 @@ for j = 1:length(x_0(1,:))
 
     for i = 2:N 
 
-        x_new = xx_0 - rho.*subs(grad, X(1:dim), transpose(xx_0));
+        x_new = xx_0 - rho*subs(grad, X(1:dim), transpose(xx_0));
         
-        if subs(f, X(1:dim), transpose(x_new)) < subs(f, X(1:dim), transpose(xx_0))
+        
+        if (subs(f, X(1:dim), transpose(x_new)) < subs(f, X(1:dim), transpose(xx_0)))
             rho = 1.15*rho;
         else
             rho = 0.5*rho;
         end
+
         if all(abs(x_new - xx_0) <= err)
-             xx_0 = x_new;
             index_nonzero = find(resp(:,i));
             
             if isempty(index_nonzero)
