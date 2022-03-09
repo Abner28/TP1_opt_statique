@@ -10,9 +10,9 @@ for j = 1:length(x0(1,:))
 
     for i = 2:M
         xn = xx0 - rho*grad(xx0, n, choix);
-        
+
         % Règle d'Armijo
-        if  (f(xn, n, choix) < f(xx0, n, choix))
+        if  (f(xn, n, choix) < f(xx0, n, choix))            
             rho = 1.15*rho;
         else
             rho = 0.5*rho;

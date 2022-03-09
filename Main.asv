@@ -1,34 +1,69 @@
 % TP | Optimisation Statique | Abner Micael
-
+close all
 %% Entrées générales
-choix = 2;                 % La fonction qu'on va traiter
+choix = 1;                 % La fonction qu'on va traiter
                            % (i.e.: choix = 2, la deuxième fonction du TP)
 
-n = 2;                      % Dimension du problème
-rho = 0.01;                 % Pas d'éxecution
+n = 1;                      % Dimension du problème
+rho = 0.05;                 % Pas d'éxecution
 err = 10^-3;                % Erreur
-M = 1000;                    % Nb maximum d'intérations
+M = 600;                    % Nb maximum d'intérations
 
 % CI pour dimension n >= 2 (ajouter des lignes pour chaque dimension):
-x0 = [linspace(1, 1.2, 2);
-      linspace(1, 1.2, 2);];  % Conditions Initiales
+% x0 = [linspace(2, 2, 1);
+%       linspace(1.5, 1.5, 1);
+%      ];  % Conditions Initiales
 
 % CI pour dimension 1:
-%x0 = linspace(0.3, 0.5, 5);
+x0 = linspace(1, 2, 3);
 
 %% Pas constant
 resp_pconst = pas_constant(n, x0, rho, err, M, choix);
 
-% subplot(3,1,1)
-% xlabel("Nb de itération")
-% ylabel("Convergence en chaque direction")
-% grid on
-% title("Méthode : Gradient à pas fixe")
-% for i = 1:n
-%     plot()
-%     hold on
-% end
+%% Pas variable
+resp_pvar = pas_variable(n, x0, rho, err, M, choix);
 
 %% fminsearch
 resp_fmins = fmin_search(x0, n, choix);
 
+%% Plots
+subplot(3,1,1)
+c_map = lines();
+for i = 1:length(x0(1,:))
+    it_pconst = find(resp_pconst(i,:));
+    it_pvar = find(resp_pvar(i,:));
+    % Pas constant
+    plot( 1:it_pconst(end), resp_pconst(i,1:it_pconst(end)), "Color", c_map(i,:), linewidth = 2)
+    hold on
+    % Pas variables
+    plot( 1:it_pvar(end), resp_pvar(i,1:it_pvar(end)),'--', "Color", c_map(i,:), linewidth = 2)
+    hold on
+    % fminsearch
+    plot(it_pconst(end),resp_fmins(i,1), 'x', "Color", c_map(i,:), markersize = 8, linewidth = 2)
+    hold on
+end
+
+xlabel("Nb d'itérations")
+ylabel("Évolution des x0")
+grid on
+
+subplot(3,1,1)
+c_map = lines();
+for i = 1:length(x0(1,:))
+    it_pconst = find(resp_pconst(i,:));
+    it_pvar = find(resp_pvar(i,:));
+    % Pas constant
+    plot( 1:it_pconst(end), resp_pconst(i,1:it_pconst(end)), "Color", c_map(i,:), linewidth = 2)
+    hold on
+    % Pas variables
+    plot( 1:it_pvar(end), resp_pvar(i,1:it_pvar(end)),'--', "Color", c_map(i,:), linewidth = 2)
+    hold on
+    % fminsearch
+    plot(it_pconst(end),resp_fmins(i,1), 'x', "Color", c_map(i,:), markersize = 8, linewidth = 2)
+    hold on
+end
+
+xlabel("Nb d'itérations")
+ylabel("Évolution des x0")
+grid on
+%legend()
